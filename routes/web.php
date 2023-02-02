@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $lang = App::getLocale();
+    return view('home', compact('lang'));
+})->name('home');
+Route::get('/about', function(){
+    return view('about');
+})->name('about');
+Route::get('/contact', function(){
+    return view('contact');
+})->name('contact');
