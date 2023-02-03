@@ -12,5 +12,8 @@ class Category extends Model
     protected $table = 'categorias';  
     protected $timestamp = false;
 
+    public function Products(){
+        return $this->hasMany(Product::class, 'cat');
+    }
     
 }

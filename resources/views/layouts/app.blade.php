@@ -10,7 +10,7 @@
     <meta name="keywords" content="plasticos, llantas, rodajas, metales especiales, pipe and joint">
     <meta name="author" content="Glucosa Comunicación">
     <link rel="icon" href="favicon.png">
-    <title>Mudisa {{ isset($title)? '| '.$title:'' }}</title>
+    <title>Mudisa {{ isset($title)? ':: '.$title:'' }}</title>
     
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
@@ -76,8 +76,8 @@
                 </a>
             </li>
             <li class="{{ request()->routeIs('contact')?'active':'' }}">
-                <a href="{{ route('contact') }}">
-                    {{ __('text.about_text') }}
+                <a href="#" class="contacto_link">
+                    {{ __('text.contacto_text') }}
                 </a>
             </li>
           </ul>
@@ -94,9 +94,9 @@
                 <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li class="{{ (\App::getLocale() =="es")? 'active':'' }}">
-                    <a href="#">ESP </a></li>
+                    <a href="{{ route('setLocale', ['lang' => 'es']) }}">ESP </a></li>
                 <li class="{{ (\App::getLocale() =="en")? 'active':'' }}">
-                    <a href="#">ENG</a></li>
+                    <a href="{{ route('setLocale', ['lang' => 'en']) }}">ENG</a></li>
               </ul>
             </li>
             
@@ -112,7 +112,7 @@
     <footer>
       <div class="container" style="padding-bottom: 20px;">
         <div class="row">
-          <div class="col-xs-12 col-sm-3 col-md-3 text-center"><img src="images/logo_footer.png" alt="Mudisa"></div>
+          <div class="col-xs-12 col-sm-3 col-md-3 text-center"><img src="{{ asset('images/logo_footer.png') }}" alt="Mudisa"></div>
           <div class="col-xs-12 col-sm-3 col-md-3">
             <h4>{{__('text.footer_text2')}}:</h4>
             <p>52 (33) 3696.0686<br>52 (33) 3696.0785<br>Fax/ 52 (33) 3696.0536</p>
@@ -140,7 +140,7 @@
         </div>
       </div>
       <div class="copy text-center">
-        {{__('text.footer_text5')}} <a href="http://www.glucosacomunicacion.com/" target="_blank">GLUCOSA COMUNICACIÓN</a>
+        {{__('text.footer_text5')}} <a href="https://www.glucosacomunicacion.com/" target="_blank">GLUCOSA COMUNICACIÓN</a>
       </div>
     </footer>
         
@@ -193,6 +193,6 @@
             });
         });
     </script>
-    
+    @yield('extrajs')
   </body>
 </html>
