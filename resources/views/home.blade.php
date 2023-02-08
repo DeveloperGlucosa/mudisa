@@ -1,5 +1,6 @@
 @extends('layouts.app', ['title' => 'Home'])
 @section('content')
+
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators hidden-xs">
@@ -11,13 +12,13 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item active">
-        <img src="images/home_1.jpg" alt="Distribución y comercialización">
+        <img src="{{ asset('images/home_1.jpg') }}" alt="Distribución y comercialización">
       </div>
       <div class="item">
-        <img src="images/home_2.jpg" alt="Sistemas pipe and joint">
+        <img src="{{ asset('images/home_2.jpg') }}" alt="Sistemas pipe and joint">
       </div>
       <div class="item">
-        <img src="images/home_3.jpg" alt="Fenólicos / Epoxicos">
+        <img src="{{ asset('images/home_3.jpg') }}" alt="Fenólicos / Epoxicos">
       </div>
     </div>
 
@@ -45,7 +46,7 @@
         @endphp
         <div class="col-xs-6 col-sm-4 col-md-4 box">
             <a href="#">
-                <img src="uploads/categorias/{{$category->home}}" alt="{{ $catName }}">
+                <img src="{{ asset('uploads/categorias/'.$category->home) }}" alt="{{ $catName }}">
             </a>
             <div>
                 <a href="#" class="tituloCat">
@@ -64,10 +65,10 @@
 
   <div class="container marginTop45">
     <div class="row acerca">
-      <div class="col-xs-12 col-sm-6 col-md-6"><img src="images/mapa.png" class="img-responsive"></div>
+      <div class="col-xs-12 col-sm-6 col-md-6"><img src="{{ asset('images/mapa.png') }}" class="img-responsive"></div>
       <div class="col-xs-12 col-sm-6 col-md-6 pull-right">
         <h3>{{__('text.about_text')}}</h3>
-        <p>{!! __('text.general_text3') !!}<br><br>{{__('general_text4')}}</p>
+        <p>{!! __('text.general_text3') !!}<br><br>{{__('text.general_text4')}}</p>
         <ul class="lista-nostyle">
             @foreach ($categories as $category)
                 <li>
@@ -79,10 +80,28 @@
         </ul>
         <br>
         <a href="{{ route('about') }}" class="btn btn-black">
-            {{__('general_text5')}} 
+            {{__('text.general_text5')}} 
             <i class="fa fa-angle-right"></i>
         </a>
       </div>
     </div>
   </div>
+@endsection
+@section('extrajs')
+<script>
+  jQuery(function($){
+      $('.box').matchHeight({
+        byRow: false,
+        property: 'height',
+        target: null,
+        remove: false
+    });
+      $('.tituloCat').matchHeight({
+        byRow: false,
+        property: 'height',
+        target: null,
+        remove: false
+    });
+  });
+</script>
 @endsection
