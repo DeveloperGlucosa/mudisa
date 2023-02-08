@@ -13,6 +13,6 @@ class Product extends Model
     protected $timestamp = false;
 
     public function Category(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'cat');
     }
 }

@@ -7,7 +7,7 @@
         <ol class="breadcrumb">
             <li><a href="{{ route('home') }}">{{ __('text.home_text') }}</a></li>
             <li class="active">{{ __('text.productos_text') }}</li>
-            <li class="active">{{ ucfirst($lang=='es'?($category->nombre):$category->nombre2) }}</li>
+            <li class="active">{{ ucfirst(strtolower($lang=='es'?($category->nombre):$category->nombre2)) }}</li>
         </ol>
     </div>
     <div class="row">
@@ -26,15 +26,16 @@
                 </p>
             @endisset
             <h2>
-                {{ $lang=='es'?$category->nombre:$category->nombre2 }}
+                {{ ucfirst(strtolower($lang=='es'?$category->nombre:$category->nombre2)) }}
             </h2>
             <p style="font-weight: 400;">
-                {{ $lang == 'es'?$category->descripcion:$category->descripcion2 }}
+                {{ nl2br($lang == 'es'?$category->descripcion:$category->descripcion2) }}
             </p>
             <br>
-            @isset($category->Products)
+            
+            @if(!$category->Products->isEmpty())
             <div class="row">
-                @foreach ($category->Products as $product)
+                @foreach ($category->Products->sortBy('nombre') as $product)
                 <div class="col-xs-6 col-sm-4 col-md-4">
                     <div class="producto">
                         <a href="#">
@@ -46,15 +47,24 @@
                 @endforeach
             </div>
             @else
-            <p class="text-center">No existen productos.</p>
-            @endisset
+            @foreach ($subcategories->sortBy('nombre') as $subcategory)
+                <div class="col-xs-6 col-sm-4 col-md-4">
+                    <div class="producto">
+                        <a href="{{ route('subcategory', ['param' => $subcategory['seo1']]) }}">
+                            <img src="{{ asset('uploads/subcategorias/'.$subcategory->home) }}" />
+                            <h3>{{ $lang == "es" ? $subcategory->nombre : $subcategory->nombre2 }}</h3>
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            @endif
         </div>
     </div>
-    @isset($category->table)
+    @if(!empty($category->tabla))
     <h3 class="text-center">{{__('text.general_text1')}}:</h3>
     <p class="text-center">
-        <img src="{{ asset('uploads/categorias/'.$category->table) }}" style="width: 100%; height: auto;"></p>
-    @endisset
+        <img src="{{ asset('uploads/categorias/'.$category->tabla) }}" style="width: 100%; height: auto;"></p>
+    @endif
 </div>
 @endsection
 @section('extrajs')

@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->share('categories', Category::where('subcat', 0)->get());
+        view()->share('categories', Category::where('subcat', 0)->orderBy('id', 'DESC')->get());
         view()->share('lang', App::getLocale());
     }
 }
