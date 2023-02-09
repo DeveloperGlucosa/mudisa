@@ -57,9 +57,12 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{__('text.productos_text')}} <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 @foreach($categories as $category)
+                @php
+                    $slug = $lang =='es'?$category->seo1:$category->seo2;
+                @endphp
                 <li>
-                    <a href="#">
-                        @if(\App::getLocale() == 'es')
+                    <a href="{{route('category', ['param' => $slug])}}">
+                        @if($lang == 'es')
                         {{ $category->nombre }}
                         @else
                         {{ $category->nombre2 }}

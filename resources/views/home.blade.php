@@ -38,18 +38,20 @@
         
         @foreach ($categories as $category)
         @php
-             if(\App::getLocale() == 'es'){
+             if($lang == 'es'){
                     $catName = $category->nombre;
+                    $slug = $category->seo1;
                 }else{
                     $catName = $category->nombre2;
+                    $slug = $category->seo2;
                 }
         @endphp
         <div class="col-xs-6 col-sm-4 col-md-4 box">
-            <a href="#">
+            <a href="{{route('category', ['param' => $slug])}}">
                 <img src="{{ asset('uploads/categorias/'.$category->home) }}" alt="{{ $catName }}">
             </a>
             <div>
-                <a href="#" class="tituloCat">
+                <a href="{{route('category', ['param' => $slug])}}" class="tituloCat">
                     @if (strlen($catName) < 30)
                     <div class="visible-xs-block" style="font-size:1px; height: 10px; width: 100%">
                     </div>
@@ -72,8 +74,8 @@
         <ul class="lista-nostyle">
             @foreach ($categories as $category)
                 <li>
-                    <a href="#">
-                        <span>• {{ \App::getLocale() == 'es'?$category->nombre:$category->nombre2 }}</span>
+                    <a href="{{route('category', ['param' => $slug])}}">
+                        <span>• {{ $lang == 'es'?$category->nombre:$category->nombre2 }}</span>
                     </a>
                 </li>
             @endforeach
