@@ -1,5 +1,5 @@
-@import 'https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,600i,700';
-body { padding-top: 68px; font-weight: 600; }
+
+body { padding-top: 68px; font-weight: 600; font-family: "Titillium Web";}
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
     display: block;
     width: 100%;

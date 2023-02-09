@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\siteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +25,7 @@ Route::get('/', function () {
 Route::get('/about', function(){
     return view('about');
 })->name('about');
-Route::get('/contact', function(){
-    return view('contact');
-})->name('contact');
+Route::post('/contact', [siteController::class, 'contact'])->name('contact-send');
 
 Route::get('/setLocale/{lang}', function($locale){
     if(!in_array($locale, ['es', 'en'])){

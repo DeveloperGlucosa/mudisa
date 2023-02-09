@@ -7,7 +7,7 @@
             $slug = $lang =='es'?$category->seo1:$category->seo2;
         @endphp
         <a href="{{route('category', ['param' => $slug])}}" style="text-transform: capitalize">
-         {{ ucfirst(strtolower($lang =='es'?$category->nombre:$category->nombre2)) }}  
+         {{ ucfirst(mb_strtolower($lang =='es'?$category->nombre:$category->nombre2)) }}  
         </a>
       </h4>
     </div>
@@ -32,7 +32,7 @@
                 @if($subcategory['subcat'] == $category->id)
                 <li>
                   <a href="{{ route('subcategory', ['param' => $subcategory['seo1']]) }}">
-                    • {{ ucfirst(strtolower($lang =='es'?$subcategory['nombre']:$subcategory['nombre2'])) }} 
+                    • {{ ucfirst(mb_strtolower($lang =='es'?$subcategory['nombre']:$subcategory['nombre2'])) }} 
                   </a>
                 </li>
                 @endif

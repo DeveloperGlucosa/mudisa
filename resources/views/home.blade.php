@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Home'])
+@extends('layouts.app')
 @section('content')
 
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">

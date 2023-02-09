@@ -1,4 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.app', [
+  'title' => $lang=="es"?$product->nombre:$product->nombre2,
+  'description' => $lang=="es"?$product->seodesc1:$product->seodesc2,
+  'keys' => $lang=="es"?$product->words1:$product->words2,
+])
 @section('content')
 <br>
   <div class="container">
@@ -7,7 +11,7 @@
         <li><a href="{{ route('home') }}">{{ __('text.home_text') }}</a></li>
         <li class="active">{{ __('text.productos_text') }}</li>
         <li><a href="{{route('category', ['param' => $product->Category->seo1])}}">
-            {{ ucfirst(strtolower($lang == "es" ? $product->Category->nombre: $product->Category->nombre2)) }}</a></li>
+            {{ ucfirst(mb_strtolower($lang == "es" ? $product->Category->nombre: $product->Category->nombre2)) }}</a></li>
         <li class="active">{{ $lang == "es" ? $product->nombre : $product->nombre2 }}</li>
       </ol>
     </div>
