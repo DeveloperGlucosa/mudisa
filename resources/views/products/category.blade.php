@@ -1,4 +1,8 @@
-@extends('layouts.app', ['title' => $lang=="es"?$category->nombre:$category->nombre2])
+@extends('layouts.app', [
+    'title' => $lang=="es"?$category->titulo:$category->titulo2,
+    'description' => $lang=="es"?$category->seodesc1:$category->seodesc2,
+    'keys' => $lang=="es"?$category->words1:$category->words2,
+    ])
 @section('content')
 
 <br>
@@ -7,7 +11,7 @@
         <ol class="breadcrumb">
             <li><a href="{{ route('home') }}">{{ __('text.home_text') }}</a></li>
             <li class="active">{{ __('text.productos_text') }}</li>
-            <li class="active">{{ ucfirst(strtolower($lang=='es'?($category->nombre):$category->nombre2)) }}</li>
+            <li class="active">{{ ucfirst(mb_strtolower($lang=='es'?($category->nombre):$category->nombre2)) }}</li>
         </ol>
     </div>
     <div class="row">
@@ -26,10 +30,11 @@
                 </p>
             @endisset
             <h2>
-                {{ ucfirst(strtolower($lang=='es'?$category->nombre:$category->nombre2)) }}
+               
+                {{ ucfirst(mb_strtolower($lang=='es'?$category->nombre:$category->nombre2)) }}
             </h2>
             <p style="font-weight: 400;">
-                {{ nl2br($lang == 'es'?$category->descripcion:$category->descripcion2) }}
+                {!! nl2br($lang == 'es'?$category->descripcion:$category->descripcion2) !!}
             </p>
             <br>
             
@@ -38,7 +43,7 @@
                 @foreach ($category->Products->sortBy('nombre') as $product)
                 <div class="col-xs-6 col-sm-4 col-md-4">
                     <div class="producto">
-                        <a href="#">
+                        <a href="{{ route('product', ['param' => $product->seo1]) }}">
                             <img src="{{ asset('uploads/productos/s/'.$product->foto) }}" />
                             <h3>{{ $lang == "es" ? $product->nombre : $product->nombre2 }}</h3>
                         </a>

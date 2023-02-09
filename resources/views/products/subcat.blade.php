@@ -1,4 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.app', [
+  'title' => $lang=="es"?$subcategory->titulo:$subcategory->titulo2,
+  'description' => $lang=="es"?$subcategory->seodesc1:$subcategory->seodesc2,
+  'keys' => $lang=="es"?$subcategory->words1:$subcategory->words2,
+])
 @section('content')
 <br>
   <div class="container">
@@ -8,10 +12,10 @@
             <li class="active">{{ __('text.productos_text') }}</li>
             <li>
                 <a href="{{route('category', ['param' => $category['seo1']])}}">
-                    {{ ucfirst(strtolower($lang=='es'?($category['nombre']):$category['nombre'])) }}
+                    {{ ucfirst(mb_strtolower($lang=='es'?($category['nombre']):$category['nombre'])) }}
                 </a>
             </li>
-            <li class="active">{{ ucfirst(strtolower($lang=='es'?($subcategory['nombre']):$subcategory['nombre'])) }}</li>
+            <li class="active">{{ ucfirst(mb_strtolower($lang=='es'?($subcategory['nombre']):$subcategory['nombre'])) }}</li>
         </ol>
     </div>
     <div class="row">
@@ -24,7 +28,7 @@
         @if (!empty($subcategory->banner))
         <p class="text-center"><img src="{{ asset('uploads/subcategorias/'.$subcategory->banner) }}" style="width: 100%; height: auto;"></p>
         @endif
-        <h2>{{ ucfirst(strtolower($lang=='es'?($subcategory->nombre):$subcategory->nombre2)) }}</h2>
+        <h2>{{ ucfirst(mb_strtolower($lang=='es'?($subcategory->nombre):$subcategory->nombre2)) }}</h2>
           
         <p style="font-weight: 400;">
             {{ nl2br($lang == 'es'?$subcategory->descripcion:$subcategory->descripcion2) }}

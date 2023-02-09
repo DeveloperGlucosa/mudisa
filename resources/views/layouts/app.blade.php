@@ -6,11 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="{{ __('text.general_text3') }}">
-    <meta name="keywords" content="plasticos, llantas, rodajas, metales especiales, pipe and joint">
+    <title>Mudisa :: {{ isset($title)?$title:'Distribución y comercialización de productos metal-mecánica y electrónica' }}</title>
+    <meta name="description" content="{{ isset($description)?$description:__('text.general_text3') }}">
+    <meta name="keywords" content="{{ isset($keys)?$keys:'plasticos, llantas, rodajas, metales especiales, pipe and joint' }}">
+    
     <meta name="author" content="Glucosa Comunicación">
-    <link rel="icon" href="favicon.png">
-    <title>Mudisa {{ isset($title)? ':: '.$title:'' }}</title>
+    <link rel="icon" href="{{ asset('favicon.png') }}">
+    
     
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
@@ -30,6 +32,10 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     @yield('inlinejs')
+    {{-- Fonts Google --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,400;0,600;0,700;1,600&display=swap" rel="stylesheet">
   </head>
 <!-- NAVBAR
 ================================================== -->
@@ -93,12 +99,12 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                {{ \App::getLocale() == "es" ? "ESP" : "ENG" }} 
+                {{ $lang == "es" ? "ESP" : "ENG" }} 
                 <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li class="{{ (\App::getLocale() =="es")? 'active':'' }}">
+                <li class="{{ ($lang =="es")? 'active':'' }}">
                     <a href="{{ route('setLocale', ['lang' => 'es']) }}">ESP </a></li>
-                <li class="{{ (\App::getLocale() =="en")? 'active':'' }}">
+                <li class="{{ ($lang =="en")? 'active':'' }}">
                     <a href="{{ route('setLocale', ['lang' => 'en']) }}">ENG</a></li>
               </ul>
             </li>
@@ -109,6 +115,7 @@
     </nav>
 
     <main>
+      
       @yield('content')
     </main>
     
@@ -125,20 +132,7 @@
           <div class="col-xs-12 col-sm-6 col-md-6">
             <h4>{{__('text.contacto_text')}}:</h4>
             <p>{{__('text.footer_text1')}}</p>
-            <form class="form-horizontal" id="form_contacto" name="form_contacto" method="post" action="#">
-              <div class="row" style="margin-left: 0; margin-right: 0;">
-                <div class="col-xs-12 col-sm-6 col-md-6">
-                  <div class="form-group"><input type="text" class="form-control" name="nombre" placeholder="{{__('text.footer_text6')}}" required></div>
-                  <div class="form-group"><input type="text" class="form-control" name="empresa" placeholder="{{__('text.footer_text7')}}" required></div>
-                  <div class="form-group"><input type="text" class="form-control" name="tel" placeholder="{{__('text.footer_text8')}}" required></div>
-                  <div class="form-group"><input type="email" class="form-control" name="email" placeholder="{{__('text.footer_text9')}}" required></div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6">
-                  <div class="form-group"><textarea class="form-control" name="mensaje" placeholder="{{__('text.footer_text10')}}" style="height: 166px; resize: none" required></textarea></div>
-                  <button class="btn btn-primary pull-right">{{__('text.footer_text4')}} <i class="fa fa-angle-right"></i></button>
-                </div>
-              </div>
-            </form>
+            @include('layouts._contact-form')
           </div>
         </div>
       </div>
@@ -167,17 +161,19 @@
                 event.preventDefault();
                 $(this).ekkoLightbox();
             });
-            $('#form_contacto').submit(function(e){
-              e.preventDefault();
-              $(this).find('button').prop('disabled', true);
-              $.post($(this).attr('action'), $(this).serialize(), function(data){
-                data = JSON.parse(data);
-                bootbox.alert(data.mensaje);
-                $(this).find('button').prop('disabled', false);
-                if(data.result == "success"){
-                  $('#form_contacto input, #form_contacto textarea').val('');
-                }
-              });
+            $('#form_contacto').on('submit', function(e){
+                e.preventDefault();
+                $(this).find('button').prop('disabled', true);
+                
+                $.post('{{ route('contact-send') }}', $(this).serialize(), function(data, result){
+                    bootbox.alert(data.message);
+                    if(data.result == "success"){
+                      $('#form_contact .btn.btn-primary.pull-right').prop('disabled', false);
+                      $('#form_contacto input, #form_contacto textarea').val('');
+                    }
+                }).always(function(){
+                  console.log('enviando')
+                });
             });
             $('#boletin_form').submit(function(e){
                 e.preventDefault();
